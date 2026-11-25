@@ -1,51 +1,51 @@
-  <footer class="cnl-foot">
-    <div class="cnl-foot-inner">
-      <div class="cnl-foot-grid">
-        <div class="cnl-foot-col">
-          <div class="cnl-brand" style="margin-bottom: 10px;">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <rect x="7" y="3" width="10" height="4.5" rx="2.25" fill="#d9480f"/>
-              <rect x="5" y="9.5" width="14" height="5" rx="2.5" fill="#111211"/>
-              <rect x="3" y="16.5" width="18" height="5" rx="2.5" fill="#0f7c6e"/>
-            </svg>
-            <span>Cairn University</span>
-          </div>
-          <p style="margin:0; font-size:13.5px; color:var(--cnl-mute); max-width:34ch;">
-            University Student Information &amp; Academic Management System built with HTML, CSS, JavaScript, PHP, MySQL &amp; XML.
+  <!-- Dark Footer -->
+  <footer class="ns-foot">
+    <div class="ns-foot-inner">
+
+      <div class="ns-foot-top">
+        <span class="ns-foot-eyebrow">Get in touch</span>
+        <div class="ns-foot-rule"></div>
+      </div>
+
+      <div class="ns-foot-grid">
+        <!-- Left greeting -->
+        <div>
+          <p class="ns-foot-greeting">Student&nbsp;Records.</p>
+          <a class="ns-foot-mail" href="mailto:registrar@university.edu">registrar@university.edu</a>
+          <p style="margin:16px 0 0;font-size:13px;color:rgba(255,255,255,0.45);">
+            University Student Information &amp; Academic Management System.<br>
+            Built with PHP &bull; MySQL &bull; XML &bull; HTML &bull; CSS &bull; JavaScript.
           </p>
-          <div class="cnl-status-line">
-            <span class="cnl-user-dot"></span>
-            <span>MySQL &amp; XML Store Operational</span>
+        </div>
+
+        <!-- Right link columns -->
+        <div class="ns-foot-cols">
+          <div class="ns-foot-col">
+            <h4>Modules</h4>
+            <?php if (isLoggedIn()): ?>
+              <a href="dashboard.php">/ Students</a>
+              <a href="add_student.php">/ Add</a>
+              <a href="xml_view.php">/ XML View</a>
+              <a href="logout.php">/ Sign Out</a>
+            <?php else: ?>
+              <a href="index.php">/ Login</a>
+              <a href="index.php?mode=register">/ Register</a>
+              <a href="xml_view.php">/ XML View</a>
+            <?php endif; ?>
+          </div>
+          <div class="ns-foot-col">
+            <h4>Data</h4>
+            <a href="students.xml" target="_blank" rel="noopener">/ students.xml</a>
+            <a href="xml_view.php">/ Display XML</a>
           </div>
         </div>
-
-        <div class="cnl-foot-col">
-          <h4>Modules</h4>
-          <?php if (isLoggedIn()): ?>
-            <a href="dashboard.php">Student Directory</a>
-            <a href="add_student.php">Add New Student</a>
-            <a href="xml_view.php">XML Records Page</a>
-          <?php else: ?>
-            <a href="index.php">Login Splash</a>
-            <a href="index.php?mode=register">Create Account</a>
-            <a href="xml_view.php">XML Records Page</a>
-          <?php endif; ?>
-        </div>
-
-        <div class="cnl-foot-col">
-          <h4>Data &amp; Export</h4>
-          <a href="xml_view.php">Display XML Document</a>
-          <a href="students.xml" target="_blank" rel="noopener">Raw students.xml</a>
-          <a href="logout.php">End Session</a>
-        </div>
       </div>
 
-      <div class="cnl-foot-word" aria-hidden="true">Cairn</div>
-
-      <div class="cnl-foot-bar">
+      <div class="ns-foot-bottom">
         <span>BCA Academic Project &mdash; University Student Information System</span>
-        <span class="cnl-mono">PHP &bull; MySQL &bull; XML</span>
+        <span style="font-family:var(--ns-font-mono);font-size:11.5px;">PHP &bull; MySQL &bull; XML &bull; 2026</span>
       </div>
+
     </div>
   </footer>
 

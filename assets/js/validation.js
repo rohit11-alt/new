@@ -1,25 +1,21 @@
 /**
- * Client-Side Validation & Interactivity
- * University Student Information and Academic Management System
+ * Northstar University — Client-Side Validation & Interactivity
  */
 (function () {
   "use strict";
 
-  // 1. Sticky Header Scroll Effect
-  var nav = document.querySelector(".cnl-nav");
+  // 1. Sticky Nav scroll
+  var nav = document.querySelector(".ns-nav");
   if (nav) {
     var onScroll = function () {
-      if (window.scrollY > 12) {
-        nav.classList.add("is-scrolled");
-      } else {
-        nav.classList.remove("is-scrolled");
-      }
+      if (window.scrollY > 10) nav.classList.add("is-scrolled");
+      else nav.classList.remove("is-scrolled");
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
   }
 
-  // Mobile Menu Toggle
+  // Mobile burger
   var burger = document.getElementById("navBurger");
   var navLinks = document.getElementById("navLinks");
   if (burger && navLinks) {
@@ -28,7 +24,7 @@
     });
   }
 
-  // 2. Validation Helpers
+  // 2. Field validation helpers
   function setFieldError(input, message) {
     if (!input) return;
     var errEl = document.getElementById(input.id + "_error");
@@ -55,16 +51,13 @@
     return /^[A-Za-z0-9\-]{4,20}$/.test(reg.trim());
   }
 
-  // Attach live input clearing
-  document.querySelectorAll(".cnl-input, .cnl-select").forEach(function (el) {
+  document.querySelectorAll(".ns-input, .ns-select").forEach(function (el) {
     el.addEventListener("input", function () {
-      if (el.classList.contains("is-invalid")) {
-        setFieldError(el, "");
-      }
+      if (el.classList.contains("is-invalid")) setFieldError(el, "");
     });
   });
 
-  // 3. Splash Login / Sign Up Tab Switcher
+  // 3. Auth Tab Switcher
   var tabLogin = document.getElementById("tabLogin");
   var tabRegister = document.getElementById("tabRegister");
   var loginPanel = document.getElementById("loginPanel");
@@ -85,16 +78,10 @@
     }
   }
 
-  if (tabLogin && tabRegister) {
-    tabLogin.addEventListener("click", function () {
-      switchAuthTab("login");
-    });
-    tabRegister.addEventListener("click", function () {
-      switchAuthTab("register");
-    });
-  }
+  if (tabLogin) tabLogin.addEventListener("click", function () { switchAuthTab("login"); });
+  if (tabRegister) tabRegister.addEventListener("click", function () { switchAuthTab("register"); });
 
-  // 4. Login Form Validation
+  // 4. Login Form
   var loginForm = document.getElementById("loginForm");
   if (loginForm) {
     loginForm.addEventListener("submit", function (e) {
@@ -102,31 +89,21 @@
       var username = document.getElementById("login_username");
       var password = document.getElementById("login_password");
 
-      if (!username.value.trim()) {
-        setFieldError(username, "Username is required.");
-        valid = false;
-      } else if (username.value.trim().length < 3) {
+      if (!username.value.trim() || username.value.trim().length < 3) {
         setFieldError(username, "Username must be at least 3 characters.");
         valid = false;
-      } else {
-        setFieldError(username, "");
-      }
+      } else { setFieldError(username, ""); }
 
-      if (!password.value) {
-        setFieldError(password, "Password is required.");
-        valid = false;
-      } else if (password.value.length < 4) {
+      if (!password.value || password.value.length < 4) {
         setFieldError(password, "Password must be at least 4 characters.");
         valid = false;
-      } else {
-        setFieldError(password, "");
-      }
+      } else { setFieldError(password, ""); }
 
       if (!valid) e.preventDefault();
     });
   }
 
-  // 5. Registration Form Validation
+  // 5. Register Form
   var registerForm = document.getElementById("registerForm");
   if (registerForm) {
     registerForm.addEventListener("submit", function (e) {
@@ -138,104 +115,61 @@
       var confirm = document.getElementById("reg_confirm_password");
 
       if (!fullName.value.trim() || fullName.value.trim().length < 2) {
-        setFieldError(fullName, "Enter your full name (min 2 characters).");
+        setFieldError(fullName, "Full name must be at least 2 characters.");
         valid = false;
-      } else {
-        setFieldError(fullName, "");
-      }
+      } else { setFieldError(fullName, ""); }
 
-      if (!username.value.trim() || !/^[A-Za-z0-9_]{3,30}$/.test(username.value.trim())) {
+      if (!/^[A-Za-z0-9_]{3,30}$/.test(username.value.trim())) {
         setFieldError(username, "Use 3–30 letters, numbers, or underscores.");
         valid = false;
-      } else {
-        setFieldError(username, "");
-      }
-
-      if (!isValidEmail(email.value)) {
-        setFieldError(email, "Enter a valid university email address.");
-        valid = false;
-      } else {
-        setFieldError(email, "");
-      }
-
-      if (!password.value || password.value.length < 6) {
-        setFieldError(password, "Password must be at least 6 characters.");
-        valid = false;
-      } else {
-        setFieldError(password, "");
-      }
-
-      if (confirm.value !== password.value || !confirm.value) {
-        setFieldError(confirm, "Passwords do not match.");
-        valid = false;
-      } else {
-        setFieldError(confirm, "");
-      }
-
-      if (!valid) e.preventDefault();
-    });
-  }
-
-  // 6. Add / Edit Student Form Validation
-  var studentForm = document.getElementById("studentForm");
-  if (studentForm) {
-    studentForm.addEventListener("submit", function (e) {
-      var valid = true;
-      var regNo = document.getElementById("reg_no");
-      var studentName = document.getElementById("student_name");
-      var course = document.getElementById("course");
-      var semester = document.getElementById("semester");
-      var email = document.getElementById("email");
-      var contact = document.getElementById("contact_number");
-
-      if (!isValidRegNo(regNo.value)) {
-        setFieldError(regNo, "Register No must be 4–20 alphanumeric characters (e.g. BCA2026001).");
-        valid = false;
-      } else {
-        setFieldError(regNo, "");
-      }
-
-      if (!studentName.value.trim() || studentName.value.trim().length < 2) {
-        setFieldError(studentName, "Student name is required (min 2 characters).");
-        valid = false;
-      } else {
-        setFieldError(studentName, "");
-      }
-
-      if (!course.value.trim()) {
-        setFieldError(course, "Please select or enter a course.");
-        valid = false;
-      } else {
-        setFieldError(course, "");
-      }
-
-      var semVal = parseInt(semester.value, 10);
-      if (isNaN(semVal) || semVal < 1 || semVal > 8) {
-        setFieldError(semester, "Semester must be between 1 and 8.");
-        valid = false;
-      } else {
-        setFieldError(semester, "");
-      }
+      } else { setFieldError(username, ""); }
 
       if (!isValidEmail(email.value)) {
         setFieldError(email, "Enter a valid email address.");
         valid = false;
-      } else {
-        setFieldError(email, "");
-      }
+      } else { setFieldError(email, ""); }
 
-      if (!isValidPhone(contact.value)) {
-        setFieldError(contact, "Contact number must be 10–15 digits.");
+      if (!password.value || password.value.length < 6) {
+        setFieldError(password, "Password must be at least 6 characters.");
         valid = false;
-      } else {
-        setFieldError(contact, "");
-      }
+      } else { setFieldError(password, ""); }
+
+      if (confirm.value !== password.value || !confirm.value) {
+        setFieldError(confirm, "Passwords do not match.");
+        valid = false;
+      } else { setFieldError(confirm, ""); }
 
       if (!valid) e.preventDefault();
     });
   }
 
-  // 7. Live Student Table Search & Course Filter (Dashboard)
+  // 6. Student Form
+  var studentForm = document.getElementById("studentForm");
+  if (studentForm) {
+    studentForm.addEventListener("submit", function (e) {
+      var valid = true;
+      var fields = {
+        reg_no: { el: document.getElementById("reg_no"), check: function(v) { return isValidRegNo(v) ? "" : "Register No must be 4–20 alphanumeric characters."; } },
+        student_name: { el: document.getElementById("student_name"), check: function(v) { return v.trim().length >= 2 ? "" : "Student name must be at least 2 characters."; } },
+        course: { el: document.getElementById("course"), check: function(v) { return v.trim() !== "" ? "" : "Please select a course."; } },
+        semester: { el: document.getElementById("semester"), check: function(v) { var n = parseInt(v, 10); return (!isNaN(n) && n >= 1 && n <= 8) ? "" : "Semester must be between 1 and 8."; } },
+        email: { el: document.getElementById("email"), check: function(v) { return isValidEmail(v) ? "" : "Enter a valid email address."; } },
+        contact_number: { el: document.getElementById("contact_number"), check: function(v) { return isValidPhone(v) ? "" : "Contact must be 10–15 digits."; } }
+      };
+
+      Object.keys(fields).forEach(function(key) {
+        var f = fields[key];
+        if (!f.el) return;
+        var msg = f.check(f.el.value);
+        setFieldError(f.el, msg);
+        if (msg) valid = false;
+      });
+
+      if (!valid) e.preventDefault();
+    });
+  }
+
+  // 7. Live Table Search & Filter
   var searchInput = document.getElementById("studentSearch");
   var courseFilter = document.getElementById("courseFilter");
   var studentTableBody = document.getElementById("studentTableBody");
@@ -250,27 +184,20 @@
     rows.forEach(function (row) {
       var text = row.textContent.toLowerCase();
       var rowCourse = (row.getAttribute("data-course") || "").toLowerCase();
-      var matchesSearch = !query || text.indexOf(query) !== -1;
-      var matchesCourse = !course || rowCourse === course;
-
-      if (matchesSearch && matchesCourse) {
-        row.style.display = "";
-        visibleCount++;
-      } else {
-        row.style.display = "none";
-      }
+      var matchSearch = !query || text.indexOf(query) !== -1;
+      var matchCourse = !course || rowCourse === course;
+      row.style.display = (matchSearch && matchCourse) ? "" : "none";
+      if (matchSearch && matchCourse) visibleCount++;
     });
 
     var noMatchRow = document.getElementById("noMatchRow");
-    if (noMatchRow) {
-      noMatchRow.style.display = visibleCount === 0 && rows.length > 0 ? "" : "none";
-    }
+    if (noMatchRow) noMatchRow.style.display = visibleCount === 0 && rows.length > 0 ? "" : "none";
   }
 
   if (searchInput) searchInput.addEventListener("input", filterStudents);
   if (courseFilter) courseFilter.addEventListener("change", filterStudents);
 
-  // 8. Delete Confirmation Modal
+  // 8. Delete Modal
   var deleteModal = document.getElementById("deleteModal");
   var deleteStudentLabel = document.getElementById("deleteStudentLabel");
   var deleteIdInput = document.getElementById("deleteStudentId");
@@ -278,24 +205,16 @@
 
   document.querySelectorAll("[data-delete-id]").forEach(function (btn) {
     btn.addEventListener("click", function () {
-      var id = btn.getAttribute("data-delete-id");
-      var name = btn.getAttribute("data-delete-name");
       if (deleteModal && deleteIdInput && deleteStudentLabel) {
-        deleteIdInput.value = id;
-        deleteStudentLabel.textContent = name;
+        deleteIdInput.value = btn.getAttribute("data-delete-id");
+        deleteStudentLabel.textContent = btn.getAttribute("data-delete-name");
         deleteModal.classList.add("is-open");
       }
     });
   });
 
   if (cancelDeleteBtn && deleteModal) {
-    cancelDeleteBtn.addEventListener("click", function () {
-      deleteModal.classList.remove("is-open");
-    });
-    deleteModal.addEventListener("click", function (e) {
-      if (e.target === deleteModal) {
-        deleteModal.classList.remove("is-open");
-      }
-    });
+    cancelDeleteBtn.addEventListener("click", function () { deleteModal.classList.remove("is-open"); });
+    deleteModal.addEventListener("click", function (e) { if (e.target === deleteModal) deleteModal.classList.remove("is-open"); });
   }
 })();
