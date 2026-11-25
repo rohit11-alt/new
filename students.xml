@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<university_students generated_at="2026-11-25T09:45:00+05:30" total_records="5">
+  <student id="1">
+    <register_number>BCA2024001</register_number>
+    <name>Aarav Sharma</name>
+    <course>BCA</course>
+    <semester>5</semester>
+    <email>aarav.sharma@university.edu</email>
+    <contact_number>9876543210</contact_number>
+  </student>
+  <student id="2">
+    <register_number>BCA2024002</register_number>
+    <name>Diya Nair</name>
+    <course>BCA</course>
+    <semester>5</semester>
+    <email>diya.nair@university.edu</email>
+    <contact_number>9845012345</contact_number>
+  </student>
+  <student id="3">
+    <register_number>BCA2025014</register_number>
+    <name>Rohan Verma</name>
+    <course>B.Sc Computer Science</course>
+    <semester>3</semester>
+    <email>rohan.verma@university.edu</email>
+    <contact_number>9741122334</contact_number>
+  </student>
+  <student id="4">
+    <register_number>MCA2025008</register_number>
+    <name>Meera Krishnan</name>
+    <course>MCA</course>
+    <semester>3</semester>
+    <email>meera.krishnan@university.edu</email>
+    <contact_number>9900112233</contact_number>
+  </student>
+  <student id="5">
+    <register_number>BCA2026003</register_number>
+    <name>Kabir Menon</name>
+    <course>BCA</course>
+    <semester>1</semester>
+    <email>kabir.menon@university.edu</email>
+    <contact_number>9611223344</contact_number>
+  </student>
+</university_students>
